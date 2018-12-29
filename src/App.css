@@ -3,16 +3,18 @@
   padding: 0;
   box-sizing: border-box;
   outline: none;
+  list-style: none;
 }
 
 .containerWrapper{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin-top: 50px;
 }
 
 .searchArea{
-  width: 300px;
+  width: 50%;
   height: 200px;
 }
 input[type=text] {
@@ -39,5 +41,26 @@ input[type=text] {
   color: white;
   font-size: 20px;
 }
-
-
+ul{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  padding:0;
+  margin:0 0 0 0;
+}
+img{
+  display: block;
+  max-width:100%;
+  max-height:300px;
+  width: auto;
+  height: auto;
+  border-radius: 5px;
+  border: 2px solid #cccccc;
+  padding: 5px;
+  margin: 10px;
+}
+li{
+  margin: 0;
+  padding:0
+}
