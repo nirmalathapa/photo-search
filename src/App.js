@@ -19,23 +19,23 @@ class App extends Component {
     this.setState({ query: e.target.value });
   };
   handleSearch = queryPhotos => {
-    console.log(queryPhotos);
     const key = Keys.access_key;
     const url = `https://api.unsplash.com/search/photos?page=3&query=${queryPhotos}&client_id=${key}`;
-    console.log(url);
+    this.setState({ isLoad: true });
     fetch(url)
       .then(res => res.json())
       .then(
         result => {
           this.setState({
-            isLoad: true,
-            photos: result.results
+            isLoad: false,
+            photos: result.results,
+            query: ""
           });
         },
         error => {
           this.setState({
-            isLoaded: true,
-            error
+            isLoaded: false,
+            error: error
           });
         }
       );
@@ -45,33 +45,41 @@ class App extends Component {
   };
 
   render() {
-    const { photos } = this.state;
-    console.log(photos);
-    return (
-      <div className="containerWrapper">
-        <h1>Looking for Photos</h1>
-        <div className="searchArea">
-          <input
-            type="text"
-            value={this.state.query}
-            onChange={this.handleChange}
-          />
-          <button type="submit" id="search" onClick={this.handleSubmit}>
-            Search
-          </button>
+    const { error, isLoad, photos } = this.state;
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (isLoad) {
+      return <div className="lds-dual-ring" />;
+    } else {
+      return (
+        <div className="containerWrapper">
+          <h1>Looking for Photos</h1>
+          <div className="searchArea">
+            <input
+              type="text"
+              value={this.state.query}
+              onChange={this.handleChange}
+            />
+            <button type="submit" id="search" onClick={this.handleSubmit}>
+              Search
+            </button>
+          </div>
+          <div className="imageList">
+            <ul>
+              {photos.map(photo => (
+                <li key={photo.id} className="column">
+                  <img
+                    src={photo.urls.small}
+                    alt="images"
+                    onClick={this.handleClickImage}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <div className="imageList">
-          <ul>
-            {photos.map(photo => (
-              <li key={photo.id} className="column">
-                <img src={photo.urls.small} alt="images" />
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    );
+      );
+    }
   }
 }
-
 export default App;
