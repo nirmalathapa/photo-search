@@ -66,3 +66,30 @@ li{
   margin: 0;
   padding:0
 }
+.lds-dual-ring {
+  display: inline-block;
+  width: 64px;
+  height: 164px;
+  display: flex;
+  align-items: center;
+  margin-top: 100px;  
+}
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 46px;
+  height: 46px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 5px solid indigo;
+  border-color: indigo transparent indigo transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
