@@ -68,11 +68,13 @@ class App extends Component {
             <ul>
               {photos.map(photo => (
                 <li key={photo.id} className="column">
-                  <img
-                    src={photo.urls.small}
-                    alt="images"
-                    onClick={this.handleClickImage}
-                  />
+                  <a href={photo.urls.regular}>
+                    <img
+                      src={photo.urls.small}
+                      alt="images"
+                      onClick={this.handleClickImage}
+                    />
+                  </a>
                 </li>
               ))}
             </ul>
