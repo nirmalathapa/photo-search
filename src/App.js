@@ -35,7 +35,7 @@ class App extends Component {
         error => {
           this.setState({
             isLoaded: false,
-            error: error
+            error: "No internet"
           });
         }
       );
