@@ -24,21 +24,16 @@ class App extends Component {
     this.setState({ isLoad: true });
     fetch(url)
       .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            isLoad: false,
-            photos: result.results,
-            query: ""
-          });
-        },
-        error => {
-          this.setState({
-            isLoaded: false,
-            error: "No internet"
-          });
-        }
-      );
+      .then(result =>
+        this.setState({
+          isLoad: false,
+          photos: result.results,
+          query: ""
+        })
+      )
+      .catch(err => {
+        this.setState({ error: "No internet", loading: false });
+      });
   };
   handleSubmit = e => {
     this.handleSearch(this.state.query);
@@ -47,7 +42,7 @@ class App extends Component {
   render() {
     const { error, isLoad, photos } = this.state;
     if (error) {
-      return <div>Error: {error.message}</div>;
+      return <div>Error: {this.state.error}</div>;
     } else if (isLoad) {
       return <div className="lds-dual-ring" />;
     } else {
@@ -59,8 +54,14 @@ class App extends Component {
               type="text"
               value={this.state.query}
               onChange={this.handleChange}
+              required
             />
-            <button type="submit" id="search" onClick={this.handleSubmit}>
+            <button
+              type="button"
+              id="search"
+              onClick={this.handleSubmit}
+              disabled={!this.state.query}
+            >
               Search
             </button>
           </div>
